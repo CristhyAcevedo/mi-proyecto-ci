@@ -1,0 +1,25 @@
+name: Notificación a Ntfy con Python
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  enviar_alerta:
+    runs-on: ubuntu-latest 
+
+    steps:
+      - name: Checkout del código
+        uses: actions/checkout@v4
+
+      - name: Ejecutar programa en Python
+        run: python3 main.py
+
+      - name: Enviar alerta a ntfy.sh
+        run: |
+          curl \
+            -H "Title: ¡Despliegue Exitoso en Python!" \
+            -H "Tags: snake, white_check_mark" \
+            -d "Se ha subido nuevo código a la rama main por ${{ github.actor }}." \
+            ntfy.sh/devops-itla
